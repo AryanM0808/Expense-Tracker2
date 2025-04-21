@@ -49,10 +49,21 @@ app.use((err, req, res, next) => {
 });
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/expense-tracker', {
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://aryanmahida2:@Ryan0808@cluster0.mazq6yr.mongodb.net/expense-tracker?retryWrites=true&w=majority&appName=Cluster0';
+
+// Log the connection string (without credentials) for debugging
+const sanitizedUri = MONGODB_URI.replace(/mongodb\+srv:\/\/([^:]+):([^@]+)@/, 'mongodb+srv://***:***@');
+logger.info(`Attempting to connect to MongoDB: ${sanitizedUri}`);
+
+// MongoDB connection options with serverApi configuration
+const mongooseOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-})
+  serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+  serverApi: { version: '1', strict: true, deprecationErrors: true }
+};
+
+mongoose.connect(MONGODB_URI, mongooseOptions)
 .then(() => {
   logger.info('MongoDB connected successfully');
   // Start server after DB connection
@@ -62,6 +73,7 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/expense-tra
 })
 .catch((err) => {
   logger.error(`MongoDB connection error: ${err.message}`);
+  logger.error('Please check your MONGODB_URI environment variable');
   process.exit(1);
 });
 
