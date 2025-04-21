@@ -1,0 +1,8 @@
+.qodo
+.env
+node_modules/
+build/
+dist/
+firebase.json
+.firebasec
+.firebase/
