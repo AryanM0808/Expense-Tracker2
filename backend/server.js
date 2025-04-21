@@ -49,7 +49,7 @@ app.use((err, req, res, next) => {
 });
 
 // Connect to MongoDB
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://aryanmahida2:@Ryan0808@cluster0.mazq6yr.mongodb.net/expense-tracker?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://aryanmahida2:%40Ryan0808@cluster0.mazq6yr.mongodb.net/expense-tracker?retryWrites=true&w=majority&appName=Cluster0';
 
 // Log the connection string (without credentials) for debugging
 const sanitizedUri = MONGODB_URI.replace(/mongodb\+srv:\/\/([^:]+):([^@]+)@/, 'mongodb+srv://***:***@');
